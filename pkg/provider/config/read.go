@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"time"
 
 	types "github.com/openfaas/faas-provider/types"
@@ -18,6 +19,7 @@ func ReadFromEnv(hasEnv types.HasEnv) (*types.FaaSConfig, *ProviderConfig, error
 		return nil, nil, err
 	}
 
+	os.Setenv("service_timeout", "5m5s")
 	serviceTimeout := types.ParseIntOrDurationValue(hasEnv.Getenv("service_timeout"), time.Second*60)
 
 	config.ReadTimeout = serviceTimeout
